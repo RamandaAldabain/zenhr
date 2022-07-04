@@ -1,0 +1,1100 @@
+  [1m[35m (2.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (7.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DeviseCreateUsers (20220703152839)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "role" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220703152839"]]
+  [1m[35m (3.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.8ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2022-07-03 15:28:51.096937"], ["updated_at", "2022-07-03 15:28:51.096937"]]
+  [1m[35m (3.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddAuthenticationTokenToUsers (20220703153112)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.5ms)[0m  [1m[35mALTER TABLE "users" ADD "authentication_token" varchar(30)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_authentication_token" ON "users" ("authentication_token")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220703153112"]]
+  [1m[35m (4.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started POST "/api/v1/sign_up" for ::1 at 2022-07-03 18:41:32 +0300
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::RegistrationsController#create as JSON
+  Parameters: {"user"=>{"email"=>"ramanda@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "ramanda@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."authentication_token" = ?[0m  [["authentication_token", "Ts89uUkwyhsn_4oKstfa"]]
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+  [1m[36mUser Create (2.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "role", "created_at", "updated_at", "authentication_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "ramanda@gmail.com"], ["encrypted_password", "$2a$12$jVDWBQ3wZxg0EYK9S7ZBkOa7s7YxkCelxaLyUubDiTeS2HiT2KaFW"], ["role", 0], ["created_at", "2022-07-03 15:41:33.413875"], ["updated_at", "2022-07-03 15:41:33.413875"], ["authentication_token", "Ts89uUkwyhsn_4oKstfa"]]
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+  [1m[35m (4.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+Completed 500 Internal Server Error in 344ms (ActiveRecord: 8.0ms | Allocations: 47482)
+
+
+  
+NoMethodError (undefined method `json_response' for #<Api::V1::RegistrationsController:0x0000012244cffb18>):
+  
+app/controllers/api/v1/registrations_controller.rb:6:in `create'
+Started POST "/api/v1/sign_up" for ::1 at 2022-07-03 18:42:13 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  
+NoMethodError (undefined method `Include' for ApplicationController:Class
+Did you mean?  include?
+               included):
+  
+app/controllers/application_controller.rb:2:in `<class:ApplicationController>'
+app/controllers/application_controller.rb:1:in `<main>'
+app/controllers/api/v1/registrations_controller.rb:1:in `<main>'
+Started POST "/api/v1/sign_up" for ::1 at 2022-07-03 18:42:27 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::RegistrationsController#create as JSON
+  Parameters: {"user"=>{"email"=>"ramanda@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "ramanda@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+Completed 422 Unprocessable Entity in 339ms (Views: 0.2ms | ActiveRecord: 1.7ms | Allocations: 13053)
+
+
+Started POST "/api/v1/sign_up" for ::1 at 2022-07-03 18:43:09 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::RegistrationsController#create as JSON
+  Parameters: {"user"=>{"email"=>"ramanda@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "ramanda@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+Completed 422 Unprocessable Entity in 283ms (ActiveRecord: 1.4ms | Allocations: 9135)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Email has already been taken):
+  
+app/controllers/api/v1/registrations_controller.rb:5:in `create'
+Started POST "/api/v1/sign_up" for ::1 at 2022-07-03 18:43:41 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::RegistrationsController#create as JSON
+  Parameters: {"user"=>{"email"=>"ramanda1@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "ramanda1@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."authentication_token" = ?[0m  [["authentication_token", "xFdJK2V6r_djBr8Yr5wY"]]
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+  [1m[36mUser Create (1.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "role", "created_at", "updated_at", "authentication_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "ramanda1@gmail.com"], ["encrypted_password", "$2a$12$mWowbSDfG9rbf67zdfokI.ibcB0Q83ToFxtb.il6RxTyb56jGUINK"], ["role", 0], ["created_at", "2022-07-03 15:43:41.531330"], ["updated_at", "2022-07-03 15:43:41.531330"], ["authentication_token", "xFdJK2V6r_djBr8Yr5wY"]]
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+  [1m[35m (3.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/api/v1/registrations_controller.rb:5:in `create'
+Completed 200 OK in 284ms (Views: 0.5ms | ActiveRecord: 6.0ms | Allocations: 10676)
+
+
+Started POST "/api/v1/sign_in" for ::1 at 2022-07-03 18:43:51 +0300
+  
+ActionController::RoutingError (uninitialized constant Api::V1::SessionsController):
+  
+actionpack (6.0.5) lib/action_dispatch/http/request.rb:92:in `rescue in controller_class_for'
+actionpack (6.0.5) lib/action_dispatch/http/request.rb:88:in `controller_class_for'
+actionpack (6.0.5) lib/action_dispatch/http/request.rb:81:in `controller_class'
+actionpack (6.0.5) lib/action_dispatch/routing/route_set.rb:44:in `controller'
+actionpack (6.0.5) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (6.0.5) lib/action_dispatch/routing/mapper.rb:18:in `block in <class:Constraints>'
+actionpack (6.0.5) lib/action_dispatch/routing/mapper.rb:48:in `serve'
+actionpack (6.0.5) lib/action_dispatch/journey/router.rb:49:in `block in serve'
+actionpack (6.0.5) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (6.0.5) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (6.0.5) lib/action_dispatch/routing/route_set.rb:834:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (2.2.4) lib/rack/etag.rb:27:in `call'
+rack (2.2.4) lib/rack/conditional_get.rb:40:in `call'
+rack (2.2.4) lib/rack/head.rb:12:in `call'
+activerecord (6.0.5) lib/active_record/migration.rb:567:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.5) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.5) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.5) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.5) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.5) lib/rails/rack/logger.rb:26:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.4) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.5) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.4) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+railties (6.0.5) lib/rails/engine.rb:527:in `call'
+puma (4.3.12) lib/puma/configuration.rb:228:in `call'
+puma (4.3.12) lib/puma/server.rb:727:in `handle_request'
+puma (4.3.12) lib/puma/server.rb:476:in `process_client'
+puma (4.3.12) lib/puma/server.rb:332:in `block in run'
+puma (4.3.12) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started POST "/api/v1/sign_in" for ::1 at 2022-07-03 18:44:25 +0300
+  
+ActionController::RoutingError (uninitialized constant Api::V1::SessionsController):
+  
+actionpack (6.0.5) lib/action_dispatch/http/request.rb:92:in `rescue in controller_class_for'
+actionpack (6.0.5) lib/action_dispatch/http/request.rb:88:in `controller_class_for'
+actionpack (6.0.5) lib/action_dispatch/http/request.rb:81:in `controller_class'
+actionpack (6.0.5) lib/action_dispatch/routing/route_set.rb:44:in `controller'
+actionpack (6.0.5) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (6.0.5) lib/action_dispatch/routing/mapper.rb:18:in `block in <class:Constraints>'
+actionpack (6.0.5) lib/action_dispatch/routing/mapper.rb:48:in `serve'
+actionpack (6.0.5) lib/action_dispatch/journey/router.rb:49:in `block in serve'
+actionpack (6.0.5) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (6.0.5) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (6.0.5) lib/action_dispatch/routing/route_set.rb:834:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (2.2.4) lib/rack/etag.rb:27:in `call'
+rack (2.2.4) lib/rack/conditional_get.rb:40:in `call'
+rack (2.2.4) lib/rack/head.rb:12:in `call'
+activerecord (6.0.5) lib/active_record/migration.rb:567:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.5) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.5) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.5) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.5) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.5) lib/rails/rack/logger.rb:26:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.4) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.5) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.4) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+railties (6.0.5) lib/rails/engine.rb:527:in `call'
+puma (4.3.12) lib/puma/configuration.rb:228:in `call'
+puma (4.3.12) lib/puma/server.rb:727:in `handle_request'
+puma (4.3.12) lib/puma/server.rb:476:in `process_client'
+puma (4.3.12) lib/puma/server.rb:332:in `block in run'
+puma (4.3.12) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started POST "/api/v1/sign_in" for ::1 at 2022-07-03 18:45:02 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::SessionsController#create as JSON
+  Parameters: {"sign_in"=>{"email"=>"ramanda1@gmail.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["email", "ramanda1@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/sessions_controller.rb:26:in `load_user'
+Completed 200 OK in 267ms (Views: 1.7ms | ActiveRecord: 1.2ms | Allocations: 7242)
+
+
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Update (2.8ms)[0m  [1m[33mUPDATE "users" SET "role" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["role", 1], ["updated_at", "2022-07-03 15:53:49.925033"], ["id", 1]]
+  [1m[35m (5.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateJobs (20220703155615)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "jobs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "desc" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220703155615"]]
+  [1m[35m (4.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started POST "/api/v1/add_job" for ::1 at 2022-07-03 19:43:20 +0300
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::SessionsController#create as JSON
+  Parameters: {"add_job"=>{"title"=>"ramanda1@gmail.com", "desc"=>"rrrrrr"}}
+Completed 400 Bad Request in 0ms (ActiveRecord: 0.0ms | Allocations: 269)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: sign_in):
+  
+app/controllers/api/v1/sessions_controller.rb:21:in `sign_in_params'
+Started POST "/api/v1/add_job" for ::1 at 2022-07-03 19:43:40 +0300
+Processing by Api::V1::SessionsController#create as JSON
+  Parameters: {"ob"=>{"title"=>"ramanda1@gmail.com"}, "job"=>{"desc"=>"rrrrrr"}}
+Completed 400 Bad Request in 0ms (ActiveRecord: 0.0ms | Allocations: 159)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: sign_in):
+  
+app/controllers/api/v1/sessions_controller.rb:21:in `sign_in_params'
+Started POST "/api/v1/add_job" for ::1 at 2022-07-03 19:44:08 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  
+Zeitwerk::NameError (expected file C:/Users/Magic Systems/Desktop/zenHr6/app/controllers/api/v1/jobs_controller.rb to define constant Api::V1::JobsController, but didn't):
+  
+zeitwerk (2.6.0) lib/zeitwerk/loader/callbacks.rb:25:in `on_file_autoloaded'
+zeitwerk (2.6.0) lib/zeitwerk/kernel.rb:28:in `require'
+activesupport (6.0.5) lib/active_support/inflector/methods.rb:284:in `const_get'
+activesupport (6.0.5) lib/active_support/inflector/methods.rb:284:in `block in constantize'
+activesupport (6.0.5) lib/active_support/inflector/methods.rb:280:in `each'
+activesupport (6.0.5) lib/active_support/inflector/methods.rb:280:in `inject'
+activesupport (6.0.5) lib/active_support/inflector/methods.rb:280:in `constantize'
+activesupport (6.0.5) lib/active_support/dependencies/zeitwerk_integration.rb:19:in `constantize'
+actionpack (6.0.5) lib/action_dispatch/http/request.rb:89:in `controller_class_for'
+actionpack (6.0.5) lib/action_dispatch/http/parameters.rb:100:in `binary_params_for?'
+actionpack (6.0.5) lib/action_dispatch/http/parameters.rb:91:in `set_binary_encoding'
+actionpack (6.0.5) lib/action_dispatch/http/parameters.rb:69:in `path_parameters='
+actionpack (6.0.5) lib/action_dispatch/journey/router.rb:47:in `block in serve'
+actionpack (6.0.5) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (6.0.5) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (6.0.5) lib/action_dispatch/routing/route_set.rb:834:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (2.2.4) lib/rack/etag.rb:27:in `call'
+rack (2.2.4) lib/rack/conditional_get.rb:40:in `call'
+rack (2.2.4) lib/rack/head.rb:12:in `call'
+activerecord (6.0.5) lib/active_record/migration.rb:567:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.5) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.5) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.5) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.5) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.5) lib/rails/rack/logger.rb:26:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.4) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.5) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.4) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+railties (6.0.5) lib/rails/engine.rb:527:in `call'
+puma (4.3.12) lib/puma/configuration.rb:228:in `call'
+puma (4.3.12) lib/puma/server.rb:727:in `handle_request'
+puma (4.3.12) lib/puma/server.rb:476:in `process_client'
+puma (4.3.12) lib/puma/server.rb:332:in `block in run'
+puma (4.3.12) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started POST "/api/v1/add_job" for ::1 at 2022-07-03 19:45:01 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  
+NoMethodError (undefined method `binary_params_for?' for Api::V1::JobsController:Class):
+  
+actionpack (6.0.5) lib/action_dispatch/http/parameters.rb:100:in `binary_params_for?'
+actionpack (6.0.5) lib/action_dispatch/http/parameters.rb:91:in `set_binary_encoding'
+actionpack (6.0.5) lib/action_dispatch/http/parameters.rb:69:in `path_parameters='
+actionpack (6.0.5) lib/action_dispatch/journey/router.rb:47:in `block in serve'
+actionpack (6.0.5) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (6.0.5) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (6.0.5) lib/action_dispatch/routing/route_set.rb:834:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (2.2.4) lib/rack/etag.rb:27:in `call'
+rack (2.2.4) lib/rack/conditional_get.rb:40:in `call'
+rack (2.2.4) lib/rack/head.rb:12:in `call'
+activerecord (6.0.5) lib/active_record/migration.rb:567:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.5) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.5) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.5) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.5) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.5) lib/rails/rack/logger.rb:26:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.4) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.5) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.4) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+railties (6.0.5) lib/rails/engine.rb:527:in `call'
+puma (4.3.12) lib/puma/configuration.rb:228:in `call'
+puma (4.3.12) lib/puma/server.rb:727:in `handle_request'
+puma (4.3.12) lib/puma/server.rb:476:in `process_client'
+puma (4.3.12) lib/puma/server.rb:332:in `block in run'
+puma (4.3.12) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started POST "/api/v1/add_job" for ::1 at 2022-07-03 19:45:26 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  
+SyntaxError (C:/Users/Magic Systems/Desktop/zenHr6/app/controllers/api/v1/jobs_controller.rb:41: syntax error, unexpected '\n', expecting '.' or &. or :: or '['):
+  
+app/controllers/api/v1/jobs_controller.rb:41: syntax error, unexpected '\n', expecting '.' or &. or :: or '['
+app/controllers/api/v1/jobs_controller.rb:41: syntax error, unexpected '\n', expecting '.' or &. or :: or '['
+Started POST "/api/v1/add_job" for ::1 at 2022-07-03 19:45:46 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#create as JSON
+  Parameters: {"add_job"=>{"title"=>"ramanda1@gmail.com", "desc"=>"rrrrrr"}}
+Completed 400 Bad Request in 4ms (ActiveRecord: 0.0ms | Allocations: 319)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: job):
+  
+app/controllers/api/v1/jobs_controller.rb:34:in `job_params'
+app/controllers/api/v1/jobs_controller.rb:14:in `create'
+Started POST "/api/v1/add_job" for ::1 at 2022-07-03 19:45:58 +0300
+Processing by Api::V1::JobsController#create as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.com", "desc"=>"rrrrrr"}}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/v1/jobs_controller.rb:15:in `create'
+  [1m[36mJob Create (5.0ms)[0m  [1m[32mINSERT INTO "jobs" ("title", "desc", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["title", "ramanda1@gmail.com"], ["desc", "rrrrrr"], ["created_at", "2022-07-03 16:45:58.422473"], ["updated_at", "2022-07-03 16:45:58.422473"]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:15:in `create'
+  [1m[35m (5.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/api/v1/jobs_controller.rb:15:in `create'
+Completed 200 OK in 43ms (Views: 4.4ms | ActiveRecord: 12.6ms | Allocations: 5827)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 19:56:07 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.com", "desc"=>"rrrrrr"}}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 655)
+
+
+  
+NoMethodError (undefined method `update' for nil:NilClass):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 20:18:06 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 404 Not Found in 4ms (ActiveRecord: 0.0ms | Allocations: 884)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 20:18:51 +0300
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"ID"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 404 Not Found in 1ms (ActiveRecord: 0.0ms | Allocations: 146)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 20:20:20 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"ID"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 404 Not Found in 6ms (ActiveRecord: 0.8ms | Allocations: 3191)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 20:20:22 +0300
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"ID"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 404 Not Found in 1ms (ActiveRecord: 0.0ms | Allocations: 153)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 21:41:36 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  
+SyntaxError (C:/Users/Magic Systems/Desktop/zenHr6/app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ':', expecting ')'
+        @job=Job.find(id : params[:id])
+                         ^
+C:/Users/Magic Systems/Desktop/zenHr6/app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ')', expecting `end'
+...@job=Job.find(id : params[:id])
+...                              ^
+):
+  
+app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ':', expecting ')'
+app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ')', expecting `end'
+app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ':', expecting ')'
+app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ')', expecting `end'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 21:42:28 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  
+SyntaxError (C:/Users/Magic Systems/Desktop/zenHr6/app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ':', expecting ')'
+        @job=Job.find_by(id : params[:id])
+                            ^
+C:/Users/Magic Systems/Desktop/zenHr6/app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ')', expecting `end'
+...b=Job.find_by(id : params[:id])
+...                              ^
+):
+  
+app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ':', expecting ')'
+app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ')', expecting `end'
+app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ':', expecting ')'
+app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ')', expecting `end'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 21:43:41 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 500 Internal Server Error in 0ms (ActiveRecord: 0.0ms | Allocations: 125)
+
+
+  
+ArgumentError (wrong number of arguments (given 2, expected 1)):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 21:44:37 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  
+SyntaxError (C:/Users/Magic Systems/Desktop/zenHr6/app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ':', expecting ')'
+        @job=Job.find_by(id : params[:id])
+                            ^
+C:/Users/Magic Systems/Desktop/zenHr6/app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ')', expecting `end'
+...b=Job.find_by(id : params[:id])
+...                              ^
+):
+  
+app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ':', expecting ')'
+app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ')', expecting `end'
+app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ':', expecting ')'
+app/controllers/api/v1/jobs_controller.rb:26: syntax error, unexpected ')', expecting `end'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 21:44:57 +0300
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.comAYHAM"}}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 610)
+
+
+  
+NoMethodError (undefined method `update_attributes' for nil:NilClass):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 21:49:21 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 655)
+
+
+  
+NoMethodError (undefined method `update' for nil:NilClass):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 21:52:37 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms | Allocations: 651)
+
+
+  
+NoMethodError (undefined method `update!' for nil:NilClass):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 21:54:27 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 404 Not Found in 3ms (ActiveRecord: 1.0ms | Allocations: 956)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 21:54:31 +0300
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 404 Not Found in 0ms (ActiveRecord: 0.0ms | Allocations: 139)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:01:54 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms | Allocations: 761)
+
+
+  
+NoMethodError (undefined method `id' for nil:NilClass):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:02:49 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 404 Not Found in 4ms (ActiveRecord: 0.9ms | Allocations: 958)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:50:in `find_job'
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:12:05 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+  [1m[36mJob Load (0.6ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:26:in `update'
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+  [1m[36mJob Update (1.5ms)[0m  [1m[33mUPDATE "jobs" SET "title" = ?, "desc" = ?, "updated_at" = ? WHERE "jobs"."id" = ?[0m  [["title", "ramanda1@gmail.comAYHAM"], ["desc", "rrrrrrAYHAM"], ["updated_at", "2022-07-03 19:12:05.751443"], ["id", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+  [1m[35m (7.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Completed 200 OK in 42ms (Views: 0.8ms | ActiveRecord: 9.6ms | Allocations: 6086)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:13:14 +0300
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+[31mUnpermitted parameters: :title, :desc[0m
+  [1m[36mJob Load (0.5ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Completed 200 OK in 18ms (Views: 0.6ms | ActiveRecord: 1.4ms | Allocations: 4168)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:13:18 +0300
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+[31mUnpermitted parameters: :title, :desc[0m
+  [1m[36mJob Load (0.3ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+[31mUnpermitted parameter: :id[0m
+Completed 200 OK in 13ms (Views: 4.4ms | ActiveRecord: 0.3ms | Allocations: 1038)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:13:32 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+[31mUnpermitted parameters: :title, :desc[0m
+  [1m[36mJob Load (0.2ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" = ? LIMIT ?[0m  [["id", nil], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Completed 404 Not Found in 15ms (ActiveRecord: 1.1ms | Allocations: 1628)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job with 'id'={"id"=>"1"}):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:17:10 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 404 Not Found in 3ms (ActiveRecord: 0.8ms | Allocations: 964)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:19:52 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"id"=>{"id"=>"1"}, "job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 404 Not Found in 3ms (ActiveRecord: 0.7ms | Allocations: 961)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:20:06 +0300
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"id"=>{"job_id"=>"1"}, "job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 404 Not Found in 1ms (ActiveRecord: 0.0ms | Allocations: 142)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:20:07 +0300
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"id"=>{"job_id"=>"1"}, "job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 404 Not Found in 1ms (ActiveRecord: 0.0ms | Allocations: 142)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:30:45 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"job_id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.0ms | Allocations: 3435)
+
+
+  
+NoMethodError (undefined method `params' for #<Class:0x00000160662b0828>):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:35:11 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"job_id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 404 Not Found in 4ms (ActiveRecord: 0.9ms | Allocations: 957)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:35:57 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM", "id"=>"1"}}
+Completed 404 Not Found in 2ms (ActiveRecord: 0.6ms | Allocations: 957)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:36:26 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM", "id"=>"1"}}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 665)
+
+
+  
+NoMethodError (undefined method `update' for nil:NilClass):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:37:00 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM", "id"=>"1"}}
+  [1m[36mJob Load (0.1ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Completed 404 Not Found in 4ms (ActiveRecord: 0.8ms | Allocations: 1543)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job with 'id'=2):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:37:17 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM", "id"=>"1"}}
+  [1m[36mJob Load (0.2ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:26:in `update'
+[31mUnpermitted parameter: :id[0m
+Completed 200 OK in 11ms (Views: 0.4ms | ActiveRecord: 0.8ms | Allocations: 4183)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:42:23 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1"}}
+Completed 404 Not Found in 3ms (ActiveRecord: 1.1ms | Allocations: 955)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:46:55 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 404 Not Found in 3ms (ActiveRecord: 0.7ms | Allocations: 956)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Job without an ID):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:56:13 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+  [1m[36mJob Load (0.3ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" IS NULL ORDER BY "jobs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:26:in `update'
+[31mUnpermitted parameter: :id[0m
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 0.3ms | Allocations: 1930)
+
+
+  
+NoMethodError (undefined method `update' for nil:NilClass):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:56:45 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1"}}
+  [1m[36mJob Load (0.1ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" IS NULL ORDER BY "jobs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Completed 422 Unprocessable Entity in 4ms (Views: 0.2ms | ActiveRecord: 0.8ms | Allocations: 1684)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:56:58 +0300
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+  [1m[36mJob Load (0.3ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" IS NULL ORDER BY "jobs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Completed 422 Unprocessable Entity in 2ms (Views: 0.2ms | ActiveRecord: 0.3ms | Allocations: 807)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:57:02 +0300
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+  [1m[36mJob Load (0.2ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" IS NULL ORDER BY "jobs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Completed 422 Unprocessable Entity in 2ms (Views: 0.2ms | ActiveRecord: 0.2ms | Allocations: 807)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:57:06 +0300
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+  [1m[36mJob Load (0.2ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" IS NULL ORDER BY "jobs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Completed 422 Unprocessable Entity in 2ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 807)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:57:17 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+  [1m[36mJob Load (0.1ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" IS NULL ORDER BY "jobs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:26:in `update'
+[31mUnpermitted parameter: :id[0m
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 1.0ms | Allocations: 2212)
+
+
+  
+NoMethodError (undefined method `update' for nil:NilClass):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 22:59:24 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1"}}
+  [1m[36mJob Load (0.1ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" IS NULL[0m
+  ↳ app/controllers/response.rb:3:in `json_response'
+Completed 200 OK in 3ms (Views: 1.4ms | ActiveRecord: 0.5ms | Allocations: 1672)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 23:00:27 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+[31mUnpermitted parameter: :id[0m
+  [1m[36mJob Load (0.2ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" IS NULL[0m
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Completed 200 OK in 5ms (Views: 0.2ms | ActiveRecord: 0.6ms | Allocations: 1512)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 23:00:41 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+[31mUnpermitted parameter: :id[0m
+  [1m[36mJob Load (0.2ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" IS NULL[0m
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Completed 200 OK in 8ms (Views: 0.3ms | ActiveRecord: 0.5ms | Allocations: 1509)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 23:01:17 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+[31mUnpermitted parameter: :id[0m
+  [1m[36mJob Load (0.1ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" IS NULL[0m
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Completed 200 OK in 3ms (Views: 0.2ms | ActiveRecord: 0.4ms | Allocations: 1511)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 23:01:23 +0300
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"2", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+[31mUnpermitted parameter: :id[0m
+  [1m[36mJob Load (0.2ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" IS NULL[0m
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 819)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 23:01:28 +0300
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"3", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+[31mUnpermitted parameter: :id[0m
+  [1m[36mJob Load (0.2ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" IS NULL[0m
+  ↳ app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 819)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 23:01:43 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"3", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 308)
+
+
+  
+ArgumentError (Unsupported argument type: 1 (Integer)):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 23:02:04 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"3", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+  [1m[36mJob Load (0.1ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" IS NULL ORDER BY "jobs"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:26:in `update'
+[31mUnpermitted parameter: :id[0m
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 0.9ms | Allocations: 2215)
+
+
+  
+NoMethodError (undefined method `update' for nil:NilClass):
+  
+app/controllers/api/v1/jobs_controller.rb:27:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 23:02:24 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"3", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+  [1m[36mJob Load (0.1ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:26:in `update'
+[31mUnpermitted parameter: :id[0m
+Completed 200 OK in 13ms (Views: 0.3ms | ActiveRecord: 0.7ms | Allocations: 4195)
+
+
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 23:03:02 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"id"=>"1", "title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 243)
+
+
+  
+TypeError (no implicit conversion of Symbol into Integer):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `[]'
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-03 23:16:27 +0300
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms | Allocations: 244)
+
+
+  
+TypeError (no implicit conversion of Symbol into Integer):
+  
+app/controllers/api/v1/jobs_controller.rb:26:in `[]'
+app/controllers/api/v1/jobs_controller.rb:26:in `update'
+Started POST "/api/v1/add_job" for ::1 at 2022-07-03 23:16:43 +0300
+Processing by Api::V1::JobsController#index as JSON
+DEPRECATION WARNING: Dangerous query method (method whose arguments are used as raw SQL) called with non-attribute argument(s): ":created_at DESC". Non-attribute arguments will be disallowed in Rails 6.1. This method should not be called with user-provided values, such as request parameters or model attributes. Known-safe values can be passed by wrapping them in Arel.sql(). (called from index at C:/Users/Magic Systems/Desktop/zenHr6/app/controllers/api/v1/jobs_controller.rb:3)
+Completed 204 No Content in 1ms (ActiveRecord: 0.0ms | Allocations: 193)
+
+
+Started POST "/api/v1/add_job" for ::1 at 2022-07-03 23:17:27 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#index as JSON
+  [1m[36mJob Load (0.3ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs"[0m
+  ↳ app/controllers/api/v1/jobs_controller.rb:4:in `puts'
+Completed 204 No Content in 10ms (ActiveRecord: 1.2ms | Allocations: 3674)
+
+
+Started GET "/api/v1/add_job" for ::1 at 2022-07-04 12:57:32 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#index as JSON
+  [1m[36mJob Load (0.2ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs"[0m
+  ↳ app/controllers/api/v1/jobs_controller.rb:4:in `puts'
+Completed 204 No Content in 14ms (ActiveRecord: 0.2ms | Allocations: 3305)
+
+
+Started GET "/api/v1/add_job" for ::1 at 2022-07-04 14:44:48 +0300
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/add_job"):
+  
+actionpack (6.0.5) lib/action_dispatch/middleware/debug_exceptions.rb:36:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.5) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.5) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.5) lib/rails/rack/logger.rb:26:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.4) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.5) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.4) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+railties (6.0.5) lib/rails/engine.rb:527:in `call'
+puma (4.3.12) lib/puma/configuration.rb:228:in `call'
+puma (4.3.12) lib/puma/server.rb:727:in `handle_request'
+puma (4.3.12) lib/puma/server.rb:476:in `process_client'
+puma (4.3.12) lib/puma/server.rb:332:in `block in run'
+puma (4.3.12) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started GET "/api/v1/add_job" for ::1 at 2022-07-04 14:45:06 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#index as JSON
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "jobs"[0m
+  ↳ app/controllers/api/v1/jobs_controller.rb:3:in `index'
+Completed 200 OK in 10ms (Views: 1.5ms | ActiveRecord: 0.7ms | Allocations: 1388)
+
+
+Started GET "/api/v1/add_job" for ::1 at 2022-07-04 14:45:46 +0300
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#index as JSON
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "jobs"[0m
+  ↳ app/controllers/api/v1/jobs_controller.rb:3:in `index'
+  [1m[36mJob Load (0.2ms)[0m  [1m[34mSELECT "jobs".* FROM "jobs" WHERE "jobs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/jobs_controller.rb:5:in `block in index'
+Completed 200 OK in 16ms (Views: 1.2ms | ActiveRecord: 1.0ms | Allocations: 4539)
+
+
+Started GET "/api/v1/update_job" for ::1 at 2022-07-04 14:57:52 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/update_job"):
+  
+actionpack (6.0.5) lib/action_dispatch/middleware/debug_exceptions.rb:36:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.5) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.5) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.5) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.5) lib/rails/rack/logger.rb:26:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.4) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.5) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.4) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.5) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+railties (6.0.5) lib/rails/engine.rb:527:in `call'
+puma (4.3.12) lib/puma/configuration.rb:228:in `call'
+puma (4.3.12) lib/puma/server.rb:727:in `handle_request'
+puma (4.3.12) lib/puma/server.rb:476:in `process_client'
+puma (4.3.12) lib/puma/server.rb:332:in `block in run'
+puma (4.3.12) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started POST "/api/v1/update_job" for ::1 at 2022-07-04 14:58:05 +0300
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"c"=>"1", "job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Started POST "/api/v1/update_job" for ::1 at 2022-07-04 14:59:58 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"c"=>"1", "job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Started POST "/api/v1/update_job" for ::1 at 2022-07-04 15:07:14 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::JobsController#update as JSON
+  Parameters: {"job"=>{"title"=>"ramanda1@gmail.comAYHAM", "desc"=>"rrrrrrAYHAM"}}
+Started POST "/api/v1/update_job" for ::1 at 2022-07-04 15:11:14 +0300
+  [1m[35m (3.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAppjobs (20220704124236)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "appjobs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "status" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220704124236"]]
+  [1m[35m (3.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddUseridToAppjob (20220704145412)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.4ms)[0m  [1m[35mALTER TABLE "appjobs" ADD "userid" integer[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220704145412"]]
+  [1m[35m (4.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddSeenToAppjob (20220704145946)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.6ms)[0m  [1m[35mALTER TABLE "appjobs" ADD "seen" integer[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220704145946"]]
+  [1m[35m (4.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+DEPRECATION WARNING: Initialization autoloaded the constants ActionText::ContentHelper and ActionText::TagHelper.
+
+Being able to do this is deprecated. Autoloading during initialization is going
+to be an error condition in future versions of Rails.
+
+Reloading does not reboot the application, and therefore code executed during
+initialization does not run again. So, if you reload ActionText::ContentHelper, for example,
+the expected changes won't be reflected in that stale Module object.
+
+These autoloaded constants have been unloaded.
+
+Please, check the "Autoloading and Reloading Constants" guide for solutions.
+ (called from <main> at C:/Users/Magic Systems/Desktop/zenHr6/config/environment.rb:5)
